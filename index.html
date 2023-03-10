@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<title>Личный кабинет (Адреса)</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+	<link rel="stylesheet" href="sass/main.css">
+	<!-- <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=e5b3c08c-0977-4c20-af32-591e06366e56" type="text/javascript"></script> -->
+
+</head>
+<body>
+
+	<style>
+		.card-wrapper {
+			perspective: 1000px;
+			transform-style: preserve-3d;
+			}
+
+.card {
+  background: linear-gradient(45deg, #1e5799 0%, #bab523 19%, #210611 37%, #e23424 66%, #28fcdc 84%, #764682 100%);
+  display: block;
+  position: relative;
+  width: 220px;
+  height: 320px;
+  margin: 50px auto;
+  transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+}
+
+.card img:before {
+  position: absolute;
+  content: '';
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #000;
+  left: 50%;
+  top: 50%;
+}
+
+.card-active {
+  transition: transform .4s cubic-bezier(0, 0, .2, 1), filter .15s cubic-bezier(0, 0, .2, 1);
+}
+	</style>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		<div class="card-wrapper">
+		<div class="card">
+
+		</div>
+</div>
+
+
+
+	<script>
+let $img = $('.card');
+
+function move(x, y) {
+ 
+  $img.addClass('card-active');
+
+
+  let xser = $img.offset().left + $img.width() / 2;
+  let yser = $img.offset().top + $img.height() / 2;
+
+  let otnX = x - xser;
+  let otnY = y - yser;
+
+
+  let raznX = otnX / $img.width() * 100 * 2;
+  let raznY = otnY / $img.height() * 100 * 2;
+
+
+  let trX = raznY / 100 * 6 * -1;
+  let trY = raznX / 100 * 6;
+
+  trX = Math.round(trX * 1000) / 1000;
+  trY = Math.round(trY * 1000) / 1000;
+
+
+  $img.css('transform', 'rotateY(' + trY + 'deg) rotateX(' + trX + 'deg) rotateZ(0deg) scale(1.05)');
+}
+
+function resetTransform() {
+  $img.removeClass('card-active');
+  $img.css('transform', 'rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1)');
+}
+
+$img.mousemove(function(e) {
+    move(e.pageX, e.pageY);
+  })
+  .mouseout(function(e) {
+    resetTransform();
+  });
+
+
+	</script>
+	
+	
+
+	<!-- <div class="site-wrap">
+		<div class="page-address" id="page-address__init">
+			<div class="container">
+				<h1 class="page-address-title">Адреса</h1>
+				<div class="page-address-wrapper">
+					<div class="page-address-wrapper__add-address">
+						<span>Добавить новый адрес</span>
+					</div>
+					<ul class="page-address-wrapper__list-address">
+						<li class="page-address-wrapper__list-address--created">
+							<form class="page-address-wrapper__list-address--fields">
+								<div class="page-address-wrapper__list-address--title">Добавить новый адрес</div>
+								<div class="page-address-wrapper__list-address--control" data-control-valid>
+									<input type="text" data-clear data-city class="page-address-wrapper__list-address--field" required>
+									<label class="page-address-wrapper__list-address--label">Город</label>
+								</div>
+								<div class="page-address-wrapper__list-address--control" data-control-valid>
+									<input type="text" data-clear data-area class="page-address-wrapper__list-address--field" required>
+									<label class="page-address-wrapper__list-address--label">Область</label>
+								</div>
+								<div class="page-address-wrapper__list-address--control" data-control-valid>
+									<input type="text" data-clear data-street-house class="page-address-wrapper__list-address--field" required>
+									<label class="page-address-wrapper__list-address--label">Улица и дом</label>
+								</div>
+								<div class="page-address-wrapper__list-address--checkboxes">
+									<div class="page-address-wrapper__list-address--checkbox-wrp">
+										<label class="page-address-wrapper__list-address--switch">
+											<input type="checkbox" class="page-address-wrapper__list-address--checkbox">
+											<span class="page-address-wrapper__list-address--slide"></span>
+										</label>
+										<label class="page-address-wrapper__list-address--text">Частный дом</label>
+									</div>
+									<div class="page-address-wrapper__list-wrp">
+										<div class="page-address-wrapper__list-wrp--control" data-control-valid>
+											<input data-office data-clear type="text" data-clear class="page-address-wrapper__list-wrp--field" required>
+											<label class="page-address-wrapper__list-wrp--label">Кв/Офис</label>
+										</div>
+										<div class="page-address-wrapper__list-wrp--control" data-control-valid>
+											<input data-entrance data-clear type="text" data-clear class="page-address-wrapper__list-wrp--field" required>
+											<label class="page-address-wrapper__list-wrp--label">Подъезд</label>
+										</div>
+										<div class="page-address-wrapper__list-wrp--control" data-control-valid>
+											<input data-story data-clear type="text" data-clear class="page-address-wrapper__list-wrp--field" required>
+											<label class="page-address-wrapper__list-wrp--label">Этаж</label>
+										</div>
+									</div>
+								</div>
+								<div class="page-address-wrapper__list-address--title">Данный получателя</div>
+								<div class="page-address-wrapper__list-address--control" data-control-valid>
+									<input type="text" data-clear data-lastname class="page-address-wrapper__list-address--field" required>
+									<label class="page-address-wrapper__list-address--label">Имя и фамилия</label>
+								</div>
+								<div class="page-address-wrapper__list-address--control" data-control-valid>
+									<input type="text" data-clear minlength="16" maxlength="16" data-mobile class="page-address-wrapper__list-address--field" required>
+									<label class="page-address-wrapper__list-address--label">Мобильный телефон</label>
+								</div>
+								<div class="page-address-wrapper__list-address--buttons">
+									<button class="page-address-wrapper__list-address--cancel" type="button">Отменить</button>
+									<button data-save class="page-address-wrapper__list-address--save" type="submit">Сохранить</button>
+								</div>
+							</form>
+							<div class="page-address-wrapper__list-address--map">
+								<img src="img/map.png">
+							</div>
+						</li>
+					</ul> -->
+						
+					<!-- Показываем загушку если нет адресов -->
+					<!-- <div class="page-address-wrapper__no-address">
+						<img src="img/empty_address.png">
+					</div> -->
+				<!-- </div>
+			</div>
+		</div>
+	</div> -->
+
+	
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script> -->
+	<!-- <script src="./js/libs/imask.js"></script> -->
+	<!-- <script src="js/script.js"></script> -->
+
+
+	
+
+
+	
+
+</body>
+</html>
